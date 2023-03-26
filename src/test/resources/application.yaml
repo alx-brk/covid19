@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/covid
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jooq:
+    sql-dialect: postgres
+  liquibase:
+    liquibase-schema: public
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+
+logging:
+  level:
+    liquibase: debug
+
+service:
+  webClient:
+    baseUrl: https://api.covid19api.com
+    timeoutMillis: 10000

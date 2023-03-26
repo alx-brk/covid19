@@ -1,0 +1,141 @@
+openapi: 3.0.1
+info:
+  version: 0.1.1
+  title: Covid19 Stats
+tags:
+  - name: Statistics
+servers:
+  - url: /v1
+paths:
+  /statistics:
+    post:
+      tags:
+        - Statistics
+      summary: get max and min confirmed cases day
+      operationId: getStatistics
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetStatisticsRequest'
+      responses:
+        200:
+          description: succesfull request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStatisticsResponse'
+        400:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+  /statistics/period/:
+    post:
+      tags:
+        - Statistics
+      summary: get max and min confirmed cases for period
+      operationId: getStatisticsForPeriod
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetStatisticsRequest'
+      responses:
+        200:
+          description: succesfull request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStatisticsForPeriodResponse'
+        400:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+
+
+components:
+  responses:
+    Error:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommonError'
+
+  schemas:
+    GetStatisticsRequest:
+      type: object
+      properties:
+        countries:
+          description: country slugs
+          type: array
+          items:
+            type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+
+    GetStatisticsResponse:
+      type: object
+      properties:
+        maxConfirmed:
+          $ref: '#/components/schemas/CountryDayStat'
+        minConfirmed:
+          $ref: '#/components/schemas/CountryDayStat'
+
+    GetStatisticsForPeriodResponse:
+      type: object
+      properties:
+        maxConfirmed:
+          $ref: '#/components/schemas/CountryPeriodStat'
+        minConfirmed:
+          $ref: '#/components/schemas/CountryPeriodStat'
+
+
+    CountryDayStat:
+      type: object
+      properties:
+        country:
+          type: string
+        countryCode:
+          type: string
+        countrySlug:
+          type: string
+        confirmedCases:
+          type: integer
+          format: int64
+        date:
+          type: string
+          format: date
+
+
+    CountryPeriodStat:
+      type: object
+      properties:
+        country:
+          type: string
+        countryCode:
+          type: string
+        countrySlug:
+          type: string
+        confirmedCases:
+          type: integer
+          format: int64
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+
+    CommonError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+

@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001_init
+      author: abobrik
+      failOnError: true
+      runAlways: false
+      validCheckSum: ANY
+      changes:
+        - sqlFile: { dbms: postgresql, path: db/changelog/sql/schema/001_initial.sql }
+  - changeSet:
+      id: functions
+      author: abobrik
+      failOnError: true
+      runAlways: false
+      validCheckSum: ANY
+      changes:
+        - sqlFile: { path: db/changelog/sql/function/get_statistics.sql, splitStatements: false }
