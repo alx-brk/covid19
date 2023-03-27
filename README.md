@@ -19,7 +19,7 @@ You can import openapi.yaml to postman and receive prepared collection.
 
 Otherwise you can use any other tool.
 Here is what you can use:
-POST /statistics and /statistics/period
+POST /statistics and /statistics/period (see src/main/resources/openapi.yaml)
 with body:
 ```
 {
